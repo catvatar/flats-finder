@@ -12,7 +12,6 @@ def main():
     site.set_filters_and_search()
     links = CheckLinks(site.get_driver())
     links.open_offers()
-    print(links.get_data_about_flat())
     xlsx = SaveToXlsx(links.get_data_about_flat())
     xlsx.export_to_excel()
     site.get_driver().quit()

@@ -48,7 +48,7 @@ class OpenWebsite:
         input_max_area = self.get_driver().find_element(By.ID, 'areaMax').send_keys(self.get_max_area())
         input_location = self.get_driver().find_element(By.XPATH, '/html/body/div[1]/main/section[1]/div/div/form/div/div[1]/div[3]/div/button/div[2]').click()
         input_location = self.get_driver().find_element(By.XPATH, '//*[@id="location-picker-input"]')
-        input_location.send_keys('Warszawa, Ursus')
+        input_location.send_keys('Warszawa')
         WebDriverWait(self.get_driver(), 10).until(EC.element_to_be_clickable((By.XPATH,'/html/body/div[1]/main/section[1]/div/div/form/div/div[1]/div[3]/div/div[1]/div/div[2]/ul/li[1]/label[1]'))).click()
         time.sleep(1)
         self.get_driver().find_element(By.XPATH, '//*[@id="search-form-submit"]').click()
