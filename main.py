@@ -12,6 +12,7 @@ def main():
     site.set_filters_and_search(driver)
     links = CheckLinks(driver)
     links.retreive_offer_and_title()
+    links.open_offers()
 
 if __name__ == '__main__':
     main()
