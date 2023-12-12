@@ -44,6 +44,8 @@ class CheckLinks:
             self.get_driver().switch_to.window(self.get_driver().window_handles[-1])
             self.get_driver().get(link)
             self.retreive_important_data(link)
+            self.get_driver().close()
+            self.get_driver().switch_to.window(self.get_driver().window_handles[0])
 
     def retreive_important_data(self, link):
         address = self.get_with_selectors(['.css-z9gx1y > a:nth-child(1)'])

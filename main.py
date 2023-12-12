@@ -1,15 +1,13 @@
 from OpenWebsite import OpenWebsite
 from CheckLinks import CheckLinks
 from SaveToXlsx import SaveToXlsx
+from Parser import Parser
 
 def main():
-    price_min = 0
-    price_max = 600000
-    min_area = 35
-    max_area = 100
-    place = 'Warszawa'
+    parser = Parser()
+    args = parser.parse_args()
 
-    site = OpenWebsite(price_min, price_max, min_area, max_area, place)
+    site = OpenWebsite(args.price_min, args.price_max, args.min_area, args.max_area, args.place, args.time_filter)
     site.set_filters_and_search()
     links = CheckLinks(site.get_driver())
     links.open_offers()

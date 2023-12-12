@@ -8,13 +8,17 @@ from selenium.webdriver.support import expected_conditions as EC
 import time
 
 class OpenWebsite:
-    def __init__(self, price_min, price_max, min_area, max_area, place):
+    def __init__(self, price_min, price_max, min_area, max_area, place, time_filter):
         self.price_min = price_min
         self.price_max = price_max
         self.min_area = min_area
         self.max_area = max_area
         self.driver = self.setup_webdriver()
         self.place = place
+        self.time_filter = time_filter
+
+    def get_time_filter(self):
+        return self.time_filter
     
     def get_place(self):
         return self.place
@@ -56,7 +60,15 @@ class OpenWebsite:
         time.sleep(1)
         self.get_driver().find_element(By.XPATH, '//*[@id="search-form-submit"]').click()
         WebDriverWait(self.get_driver(), 10).until(EC.element_to_be_clickable((By.XPATH,'//*[@id="search-form-more-filters"]'))).click()
-        self.get_driver().find_element(By.XPATH, '/html/body/div[1]/div[2]/main/div[2]/div[2]/div/div/form/section/div[2]/div[4]/fieldset/div/div[2]/label[1]').click()
+        if self.get_time_filter() == 'any':
+            self.get_driver().find_element(By.XPATH, '/html/body/div[1]/div[2]/main/div[2]/div[2]/div/div/form/section/div[2]/div[4]/fieldset/div/div[1]/label[1]').click()
+        elif self.get_time_filter() == 'last24h':
+            self.get_driver().find_element(By.XPATH, '/html/body/div[1]/div[2]/main/div[2]/div[2]/div/div/form/section/div[2]/div[4]/fieldset/div/div[2]/label[1]').click()
+        elif self.get_time_filter() == 'last3d':
+            self.get_driver().find_element(By.XPATH, '/html/body/div[1]/div[2]/main/div[2]/div[2]/div/div/form/section/div[2]/div[4]/fieldset/div/div[3]/label[1]').click()
+        elif self.get_time_filter() == 'last3d':
+            self.get_driver().find_element(By.XPATH, '/html/body/div[1]/div[2]/main/div[2]/div[2]/div/div/form/section/div[2]/div[4]/fieldset/div/div[4]/label[1]').click()
+        
         time.sleep(1)
         self.get_driver().find_element(By.XPATH, '//*[@id="search-form-submit"]').click()
 
