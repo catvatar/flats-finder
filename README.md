@@ -5,7 +5,7 @@ This is a python code to find and retreive the most important data about flats f
 ## Dependencies
 To run this project, you will have to clone this repository and then create and activate a conda environment:
 ```
-$ conda create -n flats selenium
+$ conda create -n flats selenium openpyxl
 ```
 ```
 $ conda activate flats
