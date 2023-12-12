@@ -8,11 +8,10 @@ def main():
     max_area = 100
 
     site = OpenWebsite(price_min, price_max, min_area, max_area)
-    driver = site.setup_webdriver()
-    site.set_filters_and_search(driver)
-    links = CheckLinks(driver)
-    links.retreive_offer_and_title()
+    site.set_filters_and_search()
+    links = CheckLinks(site.get_driver())
     links.open_offers()
+    print(links.get_data_about_flat())
 
 if __name__ == '__main__':
     main()
