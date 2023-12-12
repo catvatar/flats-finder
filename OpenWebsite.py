@@ -1,7 +1,6 @@
 import os
 from selenium import webdriver
 from selenium.webdriver.firefox.service import Service
-from webdriver_manager.firefox import GeckoDriverManager
 from selenium.webdriver.firefox.options import Options
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait 
@@ -9,13 +8,17 @@ from selenium.webdriver.support import expected_conditions as EC
 import time
 
 class OpenWebsite:
-    def __init__(self, price_min, price_max, min_area, max_area):
+    def __init__(self, price_min, price_max, min_area, max_area, place):
         self.price_min = price_min
         self.price_max = price_max
         self.min_area = min_area
         self.max_area = max_area
         self.driver = self.setup_webdriver()
+        self.place = place
     
+    def get_place(self):
+        return self.place
+
     def get_price_min(self):
         return self.price_min
     
@@ -48,7 +51,7 @@ class OpenWebsite:
         input_max_area = self.get_driver().find_element(By.ID, 'areaMax').send_keys(self.get_max_area())
         input_location = self.get_driver().find_element(By.XPATH, '/html/body/div[1]/main/section[1]/div/div/form/div/div[1]/div[3]/div/button/div[2]').click()
         input_location = self.get_driver().find_element(By.XPATH, '//*[@id="location-picker-input"]')
-        input_location.send_keys('Warszawa')
+        input_location.send_keys(self.get_place())
         WebDriverWait(self.get_driver(), 10).until(EC.element_to_be_clickable((By.XPATH,'/html/body/div[1]/main/section[1]/div/div/form/div/div[1]/div[3]/div/div[1]/div/div[2]/ul/li[1]/label[1]'))).click()
         time.sleep(1)
         self.get_driver().find_element(By.XPATH, '//*[@id="search-form-submit"]').click()

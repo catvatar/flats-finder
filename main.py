@@ -7,8 +7,9 @@ def main():
     price_max = 600000
     min_area = 35
     max_area = 100
+    place = 'Warszawa'
 
-    site = OpenWebsite(price_min, price_max, min_area, max_area)
+    site = OpenWebsite(price_min, price_max, min_area, max_area, place)
     site.set_filters_and_search()
     links = CheckLinks(site.get_driver())
     links.open_offers()
