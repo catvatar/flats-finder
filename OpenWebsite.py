@@ -34,7 +34,7 @@ class OpenWebsite:
         driver = webdriver.Firefox(executable_path=os.path.join(os.getcwd() + 'geckodriver'), options=options)
         driver.get("http://otodom.pl")
         driver.add_cookie({'name' : 'OptanonAlertBoxClosed', 'value' : '2023-12-11T20:46:16.795Z'})
-        driver.maximize_window()
+        # driver.maximize_window()
         return driver
         
     def set_filters_and_search(self, driver):

@@ -11,6 +11,7 @@ def main():
     driver = site.setup_webdriver()
     site.set_filters_and_search(driver)
     links = CheckLinks(driver)
+    links.find_offers()
 
 if __name__ == '__main__':
     main()
