@@ -5,12 +5,9 @@ This is a python code to find and retreive the most important data about flats f
 ## Dependencies
 To run this project, you will have to clone this repository and then create and activate a conda environment:
 ```
-$ conda create -n flats
-```
-```
-$ conda activate flats
-```
-```
+conda create -n flats
+conda install -n flats pip
+conda activate flats
 pip install openpyxl selenium==4.9.0
 ```
 Also, download geckodriver from `https://github.com/mozilla/geckodriver/releases` and put it in the directory with source code.
