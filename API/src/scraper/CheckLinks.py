@@ -2,6 +2,8 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait 
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import StaleElementReferenceException
+from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.common.action_chains import ActionChains
 import time
 
 class CheckLinks:
@@ -78,6 +80,22 @@ class CheckLinks:
         offers_dict[link]['building_material'] = building_material_value
 
         self.set_data_about_flat(offers_dict)
+
+    def retreive_photos(self):
+        try:
+            if self.get_driver().find_element(By.CSS_SELECTOR, ".e1qwkykw1").click():
+                print("yes")
+        except:
+            pass
+        photos_number = self.get_driver().find_element(By.CSS_SELECTOR, ".image-gallery-index-total").text
+        self.get_driver().find_element(By.CSS_SELECTOR, "div.image-gallery-slide:nth-child(1) > img:nth-child(1)").click()
+        for i in range(1, int(photos_number) + 1):
+            img = self.get_driver().find_element(By.CSS_SELECTOR, f"div.image-gallery-slide:nth-child({i}) > img:nth-child(1)")
+            photo_link = img.get_attribute("src")
+            print(f"Link to photo number {i}:", photo_link)
+            action = ActionChains(self.get_driver())
+            action.send_keys(Keys.ARROW_RIGHT).perform()
+            time.sleep(1)
 
 
     def get_with_selectors(self, selectors):
