@@ -1,7 +1,7 @@
-from flats_finder.src.OpenWebsite import OpenWebsite
-from flats_finder.src.CheckLinks import CheckLinks
-from flats_finder.src.SaveToXlsx import SaveToXlsx
-from flats_finder.src.Parser import Parser
+from OpenWebsite import OpenWebsite
+from CheckLinks import CheckLinks
+from SaveToXlsx import SaveToXlsx
+from Parser import Parser
 
 def main():
     parser = Parser()
