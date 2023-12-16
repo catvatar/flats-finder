@@ -48,8 +48,9 @@ class OpenWebsite:
         options = Options()
         options.set_preference('dom.webnotifications.enabled', False)
         options.set_preference('media.webspeech.synth.enabled', False)
-        # options.add_argument('--headless')
-        driver = webdriver.Firefox(executable_path=os.path.join(os.getcwd() + 'geckodriver'), options=options)
+        options.add_argument('--headless')
+
+        driver = webdriver.Firefox(options=options)
         driver.get("https://www.otodom.pl/")
         driver.add_cookie({'name' : 'OptanonAlertBoxClosed', 'value' : '2023-12-11T20:46:16.795Z'})
         # driver.maximize_window()

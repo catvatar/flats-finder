@@ -1,19 +1,24 @@
 # flats-finder
 ## General info
-This is a python code to find and retreive the most important data about flats from Otodom - polish housing website. The data is presented in .xlsx file.
+This is a python code to find and retreive the most important data about flats from Otodom - Polish housing website.
 
-## Dependencies
-To run this project, you will have to clone this repository, create and activate a conda environment with openpyxl and selenium:
+## CLI
+To run as CLI version, use `conda`:
 ```
 conda create -n flats python=3.12
 conda install -n flats pip
 conda activate flats
 pip install openpyxl selenium==4.9.0
 ```
-Also, download geckodriver from `https://github.com/mozilla/geckodriver/releases` and put it in the directory with source code.
 
-## Variables
-If you want to personalize your search, adjust undermentioned variables:
+You may need to install `geckodriver` separately.
+
+Run with:
+```
+python3 main.py
+```
+
+Use the following CLI parameters to customize your search:
 ```
 options:
   -h, --help            show this help message and exit
@@ -28,8 +33,28 @@ options:
                         Set filtering for time of adding offer to Otodom
 ```
 
-## Run
-To run the script with default values just do
+## Web version
+To run this project as a web app you will need `docker`.
+
+Run this inside main directory of this repo:
 ```
-python3 main.py
+docker build -t flat-finder-api API
+docker run -d -p 8000:8000 flat-finder-api
 ```
+
+### Development
+For development, run with:
+```
+docker run -d --name flat-finder-api -p 8000:8000 -v $(pwd)/API/src:/src flat-finder-api
+```
+
+## API
+The same parameters are available for use with API as with CLI.
+
+Example request:
+```
+curl 'http://127.0.0.1:8000/?price_min=0&price_max=600000&min_area=35&max_area=100&place=Ursus&time_filter=last3d&market_type=any'
+```
+
+## Web client
+Coming soon.

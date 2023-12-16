@@ -4,8 +4,8 @@ import sys
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from fastapi import FastAPI
-from src.OpenWebsite import OpenWebsite
-from src.CheckLinks import CheckLinks
+from scraper.OpenWebsite import OpenWebsite
+from scraper.CheckLinks import CheckLinks
 
 app = FastAPI()
 
