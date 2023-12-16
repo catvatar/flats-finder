@@ -15,7 +15,7 @@ You may need to install `geckodriver` separately.
 
 Run with:
 ```
-python3 main.py
+python3 API/src/scraper/main.py
 ```
 
 Use the following CLI parameters to customize your search:
@@ -31,6 +31,8 @@ options:
   --place PLACE         Set location of flat
   --time_filter {any,last24h,last3d,last7d}
                         Set filtering for time of adding offer to Otodom
+  --market_type {any,primary,secondary}
+                        Set market type of flat
 ```
 
 ## Web version
