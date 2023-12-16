@@ -10,7 +10,7 @@ from scraper.CheckLinks import CheckLinks
 app = FastAPI()
 
 @app.get("/")
-def retreive_data(price_min, price_max, min_area, max_area, place, time_filter, market_type):
+def retreive_data(price_min=0, price_max=600000, min_area=0, max_area=100, place='Warszawa', time_filter='any', market_type='any'):
     site = OpenWebsite(price_min, price_max, min_area, max_area, place, time_filter, market_type)
     site.set_filters_and_search()
     links = CheckLinks(site.get_driver())
