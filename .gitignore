@@ -1,4 +1,6 @@
-__pycache__/
+API/__pycache__/
+API/geckodriver.log
+src/__pycache__/
 geckodriver.log
 geckodriver
 *.xlsx

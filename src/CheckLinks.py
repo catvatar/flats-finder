@@ -2,6 +2,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait 
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import StaleElementReferenceException
+import time
 
 class CheckLinks:
     def __init__(self, driver):
@@ -39,7 +40,7 @@ class CheckLinks:
 
     def open_offers(self):
         offers_dict = self.get_data_about_flat()
-        for link in offers_dict.keys():
+        for link in offers_dict.copy().keys():
             self.get_driver().execute_script("window.open('','_blank');")
             self.get_driver().switch_to.window(self.get_driver().window_handles[-1])
             self.get_driver().get(link)
@@ -48,6 +49,12 @@ class CheckLinks:
             self.get_driver().switch_to.window(self.get_driver().window_handles[0])
 
     def retreive_important_data(self, link):
+        if self.get_with_selectors(['div.css-tpkder:nth-child(1) > div:nth-child(2) > div:nth-child(1) > a:nth-child(1)', 'div.css-tpkder:nth-child(1) > div:nth-child(2) > div:nth-child(1)', 'div.css-tpkder:nth-child(1) > div:nth-child(2) > span:nth-child(1) > span:nth-child(1) > div:nth-child(1) > a:nth-child(1)']).text == 'pierwotny':
+            offers = self.get_data_about_flat()
+            del offers[link]
+            self.set_data_about_flat(offers)
+            return
+            
         address = self.get_with_selectors(['.css-z9gx1y > a:nth-child(1)'])
         price = self.get_with_selectors(['.css-t3wmkv > button:nth-child(1)', '[data-cy="adPageHeaderPrice"]'])
         size = self.get_with_selectors(['div.css-1ivc1bc:nth-child(1) > div:nth-child(3) > span:nth-child(1) > span:nth-child(1) > div:nth-child(1)', 'div.css-1ivc1bc:nth-child(1) > div:nth-child(3) > div:nth-child(1)'])
