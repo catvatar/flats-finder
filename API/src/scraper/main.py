@@ -4,7 +4,7 @@ from SaveToXlsx import SaveToXlsx
 import CLIParser
 
 def main():
-    listing_filter_arguments = CLIParser.ListingFilterArguments().get_parsed_arguments()
+    listing_filter_arguments = CLIParser.RealEstateSearchCriteria().get_parsed_arguments()
 
     # Open website and set filters
     site = OpenWebsite(args)
