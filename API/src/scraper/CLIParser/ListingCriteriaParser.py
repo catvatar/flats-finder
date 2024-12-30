@@ -1,6 +1,6 @@
 import argparse
 
-class Parser:
+class ListingFilterArguments:
     def __init__(self):
         self.parser = argparse.ArgumentParser()
         self.parser.add_argument('--price_min', type=int, default=0, help='Set minimum price')
@@ -11,5 +11,6 @@ class Parser:
         self.parser.add_argument('--time_filter', type=str, choices=['any', 'last24h', 'last3d', 'last7d'], default='any', help='Set filtering for time of adding offer to Otodom')
         self.parser.add_argument('--market_type', type=str, choices=['any', 'primary', 'secondary'], default='any', help='Set market type of flat')
 
-    def parse_args(self):
+    def get_parsed_arguments(self):
         return self.parser.parse_args()
+
