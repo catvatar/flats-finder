@@ -9,15 +9,15 @@ from selenium.webdriver.common.action_chains import ActionChains
 import time
 
 class OpenWebsite:
-    def __init__(self, price_min, price_max, min_area, max_area, place, time_filter, market_type):
-        self.price_min = price_min
-        self.price_max = price_max
-        self.min_area = min_area
-        self.max_area = max_area
+    def __init__(self, args):
+        self.price_min = args.price_min
+        self.price_max = args.price_max
+        self.min_area = args.min_area
+        self.max_area = args.max_area
         self.driver = self.setup_webdriver()
-        self.place = place
-        self.time_filter = time_filter
-        self.market_type = market_type
+        self.place = args.place
+        self.time_filter = args.time_filter
+        self.market_type = args.market_type
 
     def get_time_filter(self):
         return self.time_filter
@@ -47,7 +47,7 @@ class OpenWebsite:
         options = Options()
         options.set_preference('dom.webnotifications.enabled', False)
         options.set_preference('media.webspeech.synth.enabled', False)
-        options.add_argument('--headless')
+        # options.add_argument('--headless')
 
         driver = webdriver.Firefox(options=options)
         driver.get("https://www.otodom.pl/")
@@ -56,15 +56,15 @@ class OpenWebsite:
         return driver
         
     def set_filters_and_search(self):
-        input_min_price = self.get_driver().find_element(By.ID, 'priceMin').send_keys(self.get_price_min())
-        input_max_price = self.get_driver().find_element(By.ID, 'priceMax').send_keys(self.get_price_max())
-        input_min_area = self.get_driver().find_element(By.ID, 'areaMin').send_keys(self.get_min_area())
-        input_max_area = self.get_driver().find_element(By.ID, 'areaMax').send_keys(self.get_max_area())
-        input_location = self.get_driver().find_element(By.XPATH, '/html/body/div[1]/main/section[1]/div/div/form/div/div[1]/div[3]/div/button/div[2]').click()
-        input_location = self.get_driver().find_element(By.XPATH, '//*[@id="location-picker-input"]')
-        input_location.send_keys(self.get_place())
-        WebDriverWait(self.get_driver(), 10).until(EC.element_to_be_clickable((By.XPATH,'/html/body/div[1]/main/section[1]/div/div/form/div/div[1]/div[3]/div/div[1]/div/div[2]/ul/li[1]/label[1]'))).click()
-        time.sleep(1)
+        # input_min_price = self.get_driver().find_element(By.ID, 'priceMin').send_keys(self.get_price_min())
+        # input_max_price = self.get_driver().find_element(By.ID, 'priceMax').send_keys(self.get_price_max())
+        # input_min_area = self.get_driver().find_element(By.ID, 'areaMin').send_keys(self.get_min_area())
+        # input_max_area = self.get_driver().find_element(By.ID, 'areaMax').send_keys(self.get_max_area())
+        # input_location = self.get_driver().find_element(By.XPATH, '/html/body/div[1]/main/section[1]/div/div/form/div/div[1]/div[3]/div/button/div[2]').click()
+        # input_location = self.get_driver().find_element(By.XPATH, '//*[@id="location-picker-input"]')
+        # input_location.send_keys(self.get_place())
+        # WebDriverWait(self.get_driver(), 10).until(EC.element_to_be_clickable((By.XPATH,'/html/body/div[1]/main/section[1]/div/div/form/div/div[1]/div[3]/div/div[1]/div/div[2]/ul/li[1]/label[1]'))).click()
+        # time.sleep(1)
         self.get_driver().find_element(By.XPATH, '//*[@id="search-form-submit"]').click()
         WebDriverWait(self.get_driver(), 10).until(EC.element_to_be_clickable((By.XPATH,'//*[@id="search-form-more-filters"]'))).click()
         if self.get_time_filter() == 'any':
