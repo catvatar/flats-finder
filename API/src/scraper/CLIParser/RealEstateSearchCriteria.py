@@ -1,6 +1,6 @@
 import argparse
 
-class ListingFilterArguments:
+class RealEstateSearchCriteria:
     def __init__(self):
         self.parser = argparse.ArgumentParser()
         self.parser.add_argument('--price_min', type=int, default=0, help='Set minimum price')
