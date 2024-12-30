@@ -13,8 +13,12 @@ class WebDriver:
         options = Options()
         options.set_preference('dom.webnotifications.enabled', False)
         options.set_preference('media.webspeech.synth.enabled', False)
-        # options.add_argument('--headless')
 
+    def start_browser_headless(self):
+        options.add_argument('--headless')
+        start_browser(self)
+
+    def start_browser(self):
         self.driver = webdriver.Firefox(options=options)
         driver.get("https://www.otodom.pl/")
         driver.add_cookie({'name' : 'OptanonAlertBoxClosed', 'value' : '2023-12-11T20:46:16.795Z'})
