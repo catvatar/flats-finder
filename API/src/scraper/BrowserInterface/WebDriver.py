@@ -1,29 +1,40 @@
 from selenium import webdriver
-from selenium.webdriver.firefox.service import Service
 from selenium.webdriver.firefox.options import Options
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait 
-from selenium.webdriver.support import expected_conditions as EC
-from selenium.webdriver.common.keys import Keys
-from selenium.webdriver.common.action_chains import ActionChains
-import time
 
 class WebDriver:
-    def __init__(self):
-        options = Options()
-        options.set_preference('dom.webnotifications.enabled', False)
-        options.set_preference('media.webspeech.synth.enabled', False)
+    self.options = None
+    self.driver = None
 
-    def start_browser_headless(self):
-        options.add_argument('--headless')
-        start_browser(self)
+    def __init__(self, headless=False):
+        self.setOptions(headless)
+        self.start_browser()
+
+    def setOptions(self):
+        self.options = Options()
+        self.options.set_preference('dom.webnotifications.enabled', False)
+        self.options.set_preference('media.webspeech.synth.enabled', False)
+        if headless:
+            self.set_headless()
+
+    def set_headless(self):
+        self.options.add_argument('--headless')
 
     def start_browser(self):
-        self.driver = webdriver.Firefox(options=options)
-        driver.get("https://www.otodom.pl/")
-        driver.add_cookie({'name' : 'OptanonAlertBoxClosed', 'value' : '2023-12-11T20:46:16.795Z'})
-        
-    def get_webdriver(self):
-        # driver.maximize_window()
-        return driver
+        self.driver = webdriver.Firefox(options=self.options)
+
+    def set_cookies(self, cookies):
+        for cookie in cookies:
+            self.set_cookie(cookie)
+
+    def set_cookie(self, cookie):
+        self.driver.add_cookie(cookie)
+
+    def get_cookie(self, name):
+        return self.driver.get_cookie(name)
+
+    def open_website(self, url):
+        self.driver.get(url)
+
+    def quit(self):
+        self.driver.quit()
 

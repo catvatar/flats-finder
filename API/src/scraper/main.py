@@ -2,9 +2,13 @@ from OpenWebsite import OpenWebsite
 from CheckLinks import CheckLinks
 from SaveToXlsx import SaveToXlsx
 import CLIParser
+import BrowserInterface
 
 def main():
     listing_filter_arguments = CLIParser.RealEstateSearchCriteria().get_parsed_arguments()
+
+    browser = BrowserInterface.WebDriver()
+    browser.start_browser()
 
     # Open website and set filters
     site = OpenWebsite(args)
