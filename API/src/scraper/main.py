@@ -24,6 +24,7 @@ def main():
 
     # Close browser
     site.get_driver().quit()
+    browser.quit()
 
 
 if __name__ == '__main__':
