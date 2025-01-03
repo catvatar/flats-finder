@@ -2,25 +2,24 @@ from selenium import webdriver
 from selenium.webdriver.firefox.options import Options
 
 class WebDriver:
-    self.options = None
-    self.driver = None
+    options = None
+    driver = None
 
-    def __init__(self, headless=False):
-        self.setOptions(headless)
+    def start_browser_headless(self):
+        self.__set_headless__()
         self.start_browser()
 
-    def setOptions(self):
+    def start_browser(self):
+        self.__setOptions__()
+        self.driver = webdriver.Firefox(options=self.options)
+    
+    def __setOptions__(self):
         self.options = Options()
         self.options.set_preference('dom.webnotifications.enabled', False)
         self.options.set_preference('media.webspeech.synth.enabled', False)
-        if headless:
-            self.set_headless()
 
-    def set_headless(self):
-        self.options.add_argument('--headless')
-
-    def start_browser(self):
-        self.driver = webdriver.Firefox(options=self.options)
+    def __set_headless__(self):
+        self.options.add_argument('--headless')    
 
     def set_cookies(self, cookies):
         for cookie in cookies:
