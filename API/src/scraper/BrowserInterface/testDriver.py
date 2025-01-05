@@ -2,7 +2,7 @@ import unittest
 from WebDriver import *
 
 # TODO - Test start_browser, start_browser_headless and quit methods
-class TestBrowser(unittest.TestCase):
+class TestDriver(unittest.TestCase):
     def test_start_browser(self):
         browser = WebDriver()
         browser.start_browser()

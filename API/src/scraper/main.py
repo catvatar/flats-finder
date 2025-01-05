@@ -7,12 +7,8 @@ import BrowserInterface
 def main():
     listing_filter_arguments = CLIParser.RealEstateSearchCriteria().get_parsed_arguments()
 
-    browser = BrowserInterface.WebDriver()
-    browser.start_browser()
-
     # Open website and set filters
-    site = OpenWebsite(args)
-    site.set_filters_and_search()
+    scraper = BrowserInterface.WebScraper.InteractWithWebsite("https://www.otodom.pl/").set_filters();
 
     # Check links and save
     links = CheckLinks(site.get_driver())
