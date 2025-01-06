@@ -38,14 +38,9 @@ class InteractWithWebsite:
         # TODO remove last call to selenium
         if args.market_type == 'primary':
             self.driver.click_element_by_css_selector('div.css-1qtzbvd:nth-child(5) > div:nth-child(2) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(3)')
-            action = ActionChains(self.driver)
-            action.send_keys(Keys.ARROW_DOWN)
-            action.send_keys(Keys.ENTER).perform()
+            self.driver.performActionChain([Keys.ARROW_DOWN, Keys.ENTER])
         elif args.market_type == 'secondary':
             self.driver.click_element_by_css_selector('div.css-1qtzbvd:nth-child(5) > div:nth-child(2) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(3)')
-            action = ActionChains(self.driver)
-            action.send_keys(Keys.ARROW_DOWN)
-            action.send_keys(Keys.ARROW_DOWN)
-            action.send_keys(Keys.ENTER).perform()        
+            self.driver.performActionChain([Keys.ARROW_DOWN,Keys.ARROW_DOWN, Keys.ENTER])
         time.sleep(1)
         self.driver.click_element_by_xpath('//*[@id="search-form-submit"]')

@@ -83,3 +83,9 @@ class WebDriver:
     def __create_Firefox_driver__(self):
         self.driver = seleniumWebdriver.Firefox(options=self.options)
 
+    def performActionChain(self, actions):
+        action = seleniumWebdriver.ActionChains(self.driver)
+        for act in actions:
+            action.send_keys(act)
+        action.perform()
+
