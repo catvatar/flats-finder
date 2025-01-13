@@ -1,9 +1,7 @@
-import CLIParser
-from BrowserInterface import OtodomInterface
+import Otodom
 
 def main():
-    print(CLIParser.get_parsed_arguments())
-
+    Otodom.get_url_with_search_params()
 
 if __name__ == '__main__':
     main()
