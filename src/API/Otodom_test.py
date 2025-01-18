@@ -49,9 +49,35 @@ class TestBrowser(unittest.TestCase):
     def test_empty_search(self):
         self.otodom.parse_arguments()
         search_url = self.otodom.get_url_with_search_params()
-        assertEqual(search_url, empty_search)
+        empty_search = 'https://www.otodom.pl/pl/wyniki/sprzedaz/mieszkanie/cala-polska/'
+        self.assertEqual(search_url, empty_search)
 
-    empty_search = 'https://www.otodom.pl/pl/wyniki/sprzedaz/mieszkanie/cala-polska'
+    def test_warsaw_search(self):
+        args = {
+            'place' : 'Warsaw'
+        }
+        self.otodom.parse_arguments(args)
+        search_url = self.otodom.get_url_with_search_params()
+        search = 'https://www.otodom.pl/pl/wyniki/sprzedaz/mieszkanie/mazowieckie/warszawa/warszawa/warszawa/'
+        self.assertEqual(search_url, search)
+
+    def test_bialystok_search(self):
+        args = {
+            'place' : 'Bialystok'
+        }
+        self.otodom.parse_arguments(args)
+        search_url = self.otodom.get_url_with_search_params()
+        search = 'https://www.otodom.pl/pl/wyniki/sprzedaz/mieszkanie/podlaskie/bialystok/bialystok/bialystok/'
+        self.assertEqual(search_url, search)
+    
+    def test_renting_search(self):
+        args = {
+            'offer_type' : 'Wynajem'
+        }
+        self.otodom.parse_arguments(args)
+        search_url = self.otodom.get_url_with_search_params()
+        search = 'https://www.otodom.pl/pl/wyniki/wynajem/mieszkanie/cala-polska'
+        self.assertEqual(search_url, search)
 
 if __name__ == '__main__':
     unittest.main()

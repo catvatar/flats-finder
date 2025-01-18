@@ -1,21 +1,20 @@
 class Otodom:
-    def __init__(self):
-        print('Otodom init')
-
-    __base_url__ = 'https://www.otodom.pl/pl/wyniki/sprzedaz'
+    __otodom_sprzedaz__ = 'https://www.otodom.pl/pl/wyniki/sprzedaz'
     __search_parameters__ = []
     __market_location__ = ''
     __realestate_market_type__ = ''
     __property_market_type__ = ''
 
+    def __init__(self):
+        self.__realestate_market_type__ = 'mieszkanie'
 
     def parse_arguments(self,*args):
-        try:
-            self.__set_place__(args.place,0)
-        except:
-            self.__set_place__('ALL',0)
+        arguments = {}
+        if len(args) != 0:
+            arguments = args[0]
 
-        self.__set_market_type__('mieszkanie')
+        self.__set_place__(arguments.get('place'),0)
+
         # __set_price_per_real_estate__(args.price_min,args.price_max)
         # __set_area__(args.min_area,args.max_area)
         # __set_place__(args.place,0)
@@ -23,23 +22,28 @@ class Otodom:
         # __set_market_type__(args.marketType)
 
     def get_url_with_search_params(self):
-        generate_url = self.__base_url__
+        generate_url = self.__otodom_sprzedaz__
         generate_url += self.__parse_markets__()
         generate_url += self.__parse_location__()
         generate_url += self.__parse_search_parameters__()
         return generate_url
 
     def __parse_markets__(self):
-        return f'/${self.__realestate_market_type__},${self.__property_market_type__}'
+        marketType = ''
+        if self.__property_market_type__ != '':
+            marketType = f',{self.__property_market_type__}'
+        return f'/{self.__realestate_market_type__}{marketType}'
 
     def __parse_location__(self):
-        return f'/${self.market_location}'
+        return f'/{self.__market_location__}'
 
     def __parse_search_parameters__(self):
-        searchParametersString = ''
+        if len(self.__search_parameters__) == 0:
+            return ''
+
+        searchParametersString = '?'
         for parameter in self.__search_parameters__:
-            searchParametersString += f'&${parameter}'
-        searchParametersString[0] = '?'
+            searchParametersString += f'${parameter}&'
         return searchParametersString
 
     def __set_realestate_market_type__(realestate_market):
@@ -61,13 +65,14 @@ class Otodom:
         addSearchParameters(formatMinMaxParameters(min,max,'area'))
 
     def __set_place__(self, place, distanceRadius):
-        self.__add_search_parameters__(f'distanceRadius=${distanceRadius}')
-        if(place == 'ALL'):
-            self.market_location = 'cala-polska'
-        elif(place == 'Warszawa'):
-            self.market_location = 'mazowieckie/warszawa/warszawa/warszawa/'
+        if(distanceRadius != 0):
+            self.__add_search_parameters__(f'distanceRadius=${distanceRadius}')
+        if(place == 'ALL' or place == None):
+            self.__market_location__ = 'cala-polska/'
+        elif(place == 'Warsaw'):
+            self.__market_location__ = 'mazowieckie/warszawa/warszawa/warszawa/'
         elif(place == 'Bialystok'):
-            self.market_location = 'podlaskie/bialystok/bialystok/bialystok/'
+            self.__market_location__ = 'podlaskie/bialystok/bialystok/bialystok/'
         
     def __set_age__(self,age):
         if age == 'any':
