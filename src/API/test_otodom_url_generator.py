@@ -35,7 +35,7 @@
 # &viewType=listing
 
 import unittest
-from Otodom_url_generator import Otodom_url_generator
+from Otodom_url import Otodom_url_generator
 
 class TestBrowser(unittest.TestCase):
     otodom = None
@@ -47,8 +47,7 @@ class TestBrowser(unittest.TestCase):
         self.otodom = None
 
     def test_empty_search(self):
-        self.otodom.parse_arguments()
-        search_url = self.otodom.get_url_with_search_params()
+        search_url = self.otodom.generate_url()
         empty_search = 'https://www.otodom.pl/pl/wyniki/sprzedaz/mieszkanie/cala-polska/'
         self.assertEqual(search_url, empty_search)
 
@@ -56,8 +55,7 @@ class TestBrowser(unittest.TestCase):
         args = {
             'place' : 'Warsaw'
         }
-        self.otodom.parse_arguments(args)
-        search_url = self.otodom.get_url_with_search_params()
+        search_url = self.otodom.generate_url_from_args(args)
         search = 'https://www.otodom.pl/pl/wyniki/sprzedaz/mieszkanie/mazowieckie/warszawa/warszawa/warszawa/'
         self.assertEqual(search_url, search)
 
@@ -65,8 +63,7 @@ class TestBrowser(unittest.TestCase):
         args = {
             'place' : 'Bialystok'
         }
-        self.otodom.parse_arguments(args)
-        search_url = self.otodom.get_url_with_search_params()
+        search_url = self.otodom.generate_url_from_args(args)
         search = 'https://www.otodom.pl/pl/wyniki/sprzedaz/mieszkanie/podlaskie/bialystok/bialystok/bialystok/'
         self.assertEqual(search_url, search)
     
@@ -74,8 +71,7 @@ class TestBrowser(unittest.TestCase):
         args = {
             'offer_type' : 'Wynajem'
         }
-        self.otodom.parse_arguments(args)
-        search_url = self.otodom.get_url_with_search_params()
+        search_url = self.otodom.generate_url_from_args(args)
         search = 'https://www.otodom.pl/pl/wyniki/wynajem/mieszkanie/cala-polska/'
         self.assertEqual(search_url, search)
 
@@ -84,8 +80,7 @@ class TestBrowser(unittest.TestCase):
             'place' : 'Bialystok',
             'offer_type' : 'Wynajem'
         }
-        self.otodom.parse_arguments(args)
-        search_url = self.otodom.get_url_with_search_params()
+        search_url = self.otodom.generate_url_from_args(args)
         search = 'https://www.otodom.pl/pl/wyniki/wynajem/mieszkanie/podlaskie/bialystok/bialystok/bialystok/'
         self.assertEqual(search_url, search)
     
