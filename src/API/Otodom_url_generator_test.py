@@ -35,13 +35,13 @@
 # &viewType=listing
 
 import unittest
-from Otodom import Otodom
+from Otodom_url_generator import Otodom_url_generator
 
 class TestBrowser(unittest.TestCase):
     otodom = None
     
     def setUp(self):
-        self.otodom = Otodom()
+        self.otodom = Otodom_url_generator()
 
     def tearDown(self):
         self.otodom = None
@@ -76,8 +76,19 @@ class TestBrowser(unittest.TestCase):
         }
         self.otodom.parse_arguments(args)
         search_url = self.otodom.get_url_with_search_params()
-        search = 'https://www.otodom.pl/pl/wyniki/wynajem/mieszkanie/cala-polska'
+        search = 'https://www.otodom.pl/pl/wyniki/wynajem/mieszkanie/cala-polska/'
         self.assertEqual(search_url, search)
+
+    def test_renting_search_in_bialystok(self):
+        args = {
+            'place' : 'Bialystok',
+            'offer_type' : 'Wynajem'
+        }
+        self.otodom.parse_arguments(args)
+        search_url = self.otodom.get_url_with_search_params()
+        search = 'https://www.otodom.pl/pl/wyniki/wynajem/mieszkanie/podlaskie/bialystok/bialystok/bialystok/'
+        self.assertEqual(search_url, search)
+    
 
 if __name__ == '__main__':
     unittest.main()
