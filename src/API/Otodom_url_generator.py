@@ -1,28 +1,28 @@
 class Otodom_url_generator:
-    __url_static_part__ = 'https://www.otodom.pl/pl/wyniki'
-    __url_params__ = None
-    __url_dynamic_part__ = None
+    __static_url_string__ = 'https://www.otodom.pl/pl/wyniki'
+    __url_params_object__ = None
+    __dynamic_url_object__ = None
 
     def __init__(self):
-        self.__url_dynamic_part__ = Offer_type()
-        self.__url_params__ = Search_parameters()
+        self.__dynamic_url_object__ = Otodom_url_location()
+        self.__url_params_object__ = Otodom_url_parameters()
 
     def parse_arguments(self,*args):
         arguments = {}
         if len(args) != 0:
             arguments = args[0]
 
-        self.__url_dynamic_part__.set_place(arguments.get('place'),0)
-        self.__url_dynamic_part__.set_offer_type(arguments.get('offer_type'))
+        self.__dynamic_url_object__.set_place(arguments.get('place'),0)
+        self.__dynamic_url_object__.set_offer_type(arguments.get('offer_type'))
 
     def get_url_with_search_params(self):
-        generate_url = self.__url_static_part__
-        generate_url += self.__url_dynamic_part__.generate_offer_url()
-        generate_url += self.__url_params__.parse_search_parameters()
+        generate_url = self.__static_url_string__
+        generate_url += self.__dynamic_url_object__.generate_offer_url()
+        generate_url += self.__url_params_object__.parse_search_parameters()
         return generate_url
 
 
-class Search_parameters:
+class Otodom_url_parameters:
     __search_parameters__ = []
 
     def parse_search_parameters(self):
@@ -35,7 +35,7 @@ class Search_parameters:
         return searchParametersString
 
 
-class Offer_type:
+class Otodom_url_location:
     __market_location__ = ''
     __realestate_market_type__ = ''
     __property_market_type__ = ''
