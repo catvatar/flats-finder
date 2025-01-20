@@ -3,9 +3,10 @@ import selenium.webdriver.support as seleniumSupport
 import selenium.webdriver.support.wait as seleniumWait
 import selenium.webdriver.common.by as seleniumSelector
 
-options = None
-driver = None
-browserType = None
+class Driver:
+    options = None
+    driver = None
+    browserType = None
 
 
 def start_browser_headless():
