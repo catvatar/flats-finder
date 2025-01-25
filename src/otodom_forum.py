@@ -1,5 +1,7 @@
-class Otodom:
-    def __init__(self):
+from search_query import SearchQuery
+class OtodomForum:
+    def __init__(self, search_query: SearchQuery):
         pass
-    def digest_search_query(self, search_query):
-        return search_query
+
+    def get_listings(self):
+        pass
