@@ -11,7 +11,7 @@ class SearchQuery:
 
     def _throw_on_missing_arguments(self, query):
         mandatory_arguments = ['real_estate', 'offer', 'location']
-        _check_arguments_in_query(mandatory_arguments, query)
+        self._check_arguments_in_query(mandatory_arguments, query)
         return
     
     def _check_arguments_in_query(self, arguments, query):

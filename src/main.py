@@ -1,3 +1,5 @@
+from search_query import SearchQuery
+from otodom_forum import OtodomForum
 
 query_example = SearchQuery({
     'location' : 'Warsaw',
@@ -6,5 +8,5 @@ query_example = SearchQuery({
     'offer' : 'rent',
 })
 
-listings = OtodomForum(query_example).get_listings()
-print(listings.url)
+listings = OtodomForum(query_example).get_listings_from_page()
+[print(listing['url']) for listing in listings]
