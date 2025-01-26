@@ -5,7 +5,7 @@ class SeleniumWebDriver:
     driver = None
     def __init__(self):
         options = webdriver.FirefoxOptions()
-        options.headless = True
+        options.add_argument('-headless')
         self.driver = webdriver.Firefox(options=options)
 
     def get_outgoing_links(self, url):

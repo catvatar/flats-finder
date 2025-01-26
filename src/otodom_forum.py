@@ -1,28 +1,35 @@
 # TODO 1: Implement get_listings for all pages
+# TODO 2: Implement filtering for acuall offers
 
 from search_query import SearchQuery
+from selenium_web_driver import SeleniumWebDriver
+
 class OtodomForum:
     _search_query = ''
+    _driver = None
 
     def __init__(self, search_query: SearchQuery):
         self._search_query = search_query
+        self._driver = SeleniumWebDriver()
 
     def get_listings(self):
-        return self.get_listings_from_page()
-
-    def get_listings_from_page(self):
-        from selenium_web_driver import SeleniumWebDriver
-        driver = SeleniumWebDriver()
-        return self.get_listings_using_custom_driver(driver)
-
-    def get_listings_using_custom_driver(self, driver):
-        url = self._get_url_for_search_query()
-        outgoingLinks = driver.get_outgoing_links(url)
         listings = []
-        for link in outgoingLinks:
-            listings.append({
-                'url': link
-            })
+        url = self._get_url_for_search_query()
+        listings.append(self.get_listing_from_page(url))
+        return listings
+
+
+    def get_listing_from_page(self, url):
+        outgoingLinks = self._driver.get_outgoing_links(url)
+        return self._create_listings(outgoingLinks)
+
+    def use_custom_driver(self,driver):
+        self._driver = driver
+
+    def _create_listings(self, urls):
+        listings = []
+        for url in urls:
+            listings.append({'url': url})
         return listings
 
     def _get_url_for_search_query(self):
@@ -33,7 +40,7 @@ class OtodomForum:
         offer = self._parse_offer(search_query.offer)
         real_estate = self._parse_real_estate(search_query.real_estate)
         location = self._parse_location(search_query.location)
-        return f'/{offer}/{real_estate}/{location}&limit=72'
+        return f'/{offer}/{real_estate}/{location}'
 
     def _parse_offer(self, offer):
         if(offer == 'rent'):
