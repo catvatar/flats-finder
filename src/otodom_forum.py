@@ -2,44 +2,87 @@
 # TODO 2: Implement filtering for acuall offers
 
 from search_query import SearchQuery
-from selenium_web_driver import SeleniumWebDriver
+from web_driver import WebDriver
 
 class OtodomForum:
     _search_query = ''
     _driver = None
+    _current_page = ''
+    _pages_limit = None
 
     def __init__(self, search_query: SearchQuery):
         self._search_query = search_query
-        self._driver = SeleniumWebDriver()
+        self._driver = WebDriver()
+        self._current_page = self._get_url_for_search_query()
 
-    def get_listings(self):
-        listings = []
-        url = self._get_url_for_search_query()
-        listings.append(self.get_listing_from_page(url))
+
+    def get_all_listings(self):
+        listings = set()
+        prev_listings_length = 0
+        while(True):
+            listings.update(self.get_listings_from_current_page())
+            self.go_to_the_next_page()
+            if(prev_listings_length == len(listings)):
+                break
+            prev_listings_length = len(listings)
         return listings
 
+    def go_to_the_next_page(self):
+        page_number = self._get_page_number()
+        if (page_number == 0):
+            self._current_page += '?page=2'
+        self._current_page = self._current_page.replace(f'page={page_number}', f'page={page_number+1}')
 
-    def get_listing_from_page(self, url):
-        outgoingLinks = self._driver.get_outgoing_links(url)
-        return self._create_listings(outgoingLinks)
+
+    def go_to_the_previous_page(self):
+        page_number = self._get_page_number()
+        if (page_number > 1):
+            self._current_page = self._current_page.replace(f'page={page_number}', f'page={page_number-1}')
+            return
+        raise(Exception('Can not got to the previous_page. Already on page 0'))
+
+    
+    def get_listings_from_current_page(self):
+        outgoing_links = set()
+        outgoing_links.update(self._driver.get_outgoing_links(self._current_page))
+        outgoing_links = filter(self._otodom_listing_filter, outgoing_links)
+        return outgoing_links
 
     def use_custom_driver(self,driver):
         self._driver = driver
 
-    def _create_listings(self, urls):
-        listings = []
-        for url in urls:
-            listings.append({'url': url})
-        return listings
+    def set_page_limit(self, limit):
+        self._pages_limit = limit
+
+    def _get_page_number(self):
+        if(self._current_page.find('page=') == -1):
+            return 0
+        return int(self._current_page.split('page=')[1])
+
+    def _otodom_listing_filter(self,listing):
+        return listing.find('oferta') != -1
+
 
     def _get_url_for_search_query(self):
         url_static_part = 'https://www.otodom.pl/pl/wyniki'
-        return url_static_part + self._parse_search_query(self._search_query)
+        return url_static_part + self._parse_search_query()
 
-    def _parse_search_query(self, search_query):
-        offer = self._parse_offer(search_query.offer)
-        real_estate = self._parse_real_estate(search_query.real_estate)
-        location = self._parse_location(search_query.location)
+    def _parse_search_query(self):
+        if(self._search_query.offer == None):
+            raise Exception('Missing offer argument')
+        else:
+            offer = self._parse_offer(self._search_query.offer)
+        
+        if(self._search_query.real_estate == None):
+            raise Exception('Missing real_estate argument')
+        else:
+            real_estate = self._parse_real_estate(self._search_query.real_estate)
+        
+        if(self._search_query.location == None):
+            raise Exception('Missing location argument')
+        else:
+            location = self._parse_location(self._search_query.location)
+        
         return f'/{offer}/{real_estate}/{location}'
 
     def _parse_offer(self, offer):
@@ -63,3 +106,5 @@ class OtodomForum:
             return 'mazowieckie/warszawa/warszawa/warszawa'
         if(location == 'Bialystok'):
             return 'podlaskie/bialystok/bialystok/bialystok'
+        raise('Unknown Location')
+

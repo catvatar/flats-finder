@@ -1,3 +1,4 @@
 __pycache__
 API/geckodriver.log
 *.log
+listings.json
