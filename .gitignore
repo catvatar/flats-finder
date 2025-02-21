@@ -2,3 +2,5 @@ __pycache__
 API/geckodriver.log
 *.log
 listings.json
+
+remove_before_commiting
