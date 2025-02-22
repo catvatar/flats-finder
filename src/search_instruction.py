@@ -77,18 +77,18 @@ class SearchInstruction:
     def __next__(self):
         if self._run_out_of_queries():
             raise StopIteration
-        search_query = self._getCurrentSearchQuery(self._index)
+        search_query = self._get_current_search_query(self._index)
         self._index = self._index + 1
         return search_query
 
     def _run_out_of_queries(self):
         return self._index >= self._max_index
 
-    def _getCurrentSearchQuery(self, index):
-        forum, index = self._getElementFromList(self.forums, index)
-        real_estate, index = self._getElementFromList(self.real_estate_types, index)
-        offer, index = self._getElementFromList(self.offer_types, index)
-        location, index = self._getElementFromList(self.locations, index)
+    def _get_current_search_query(self, index):
+        forum, index = self._get_element_from_list(self.forums, index)
+        real_estate, index = self._get_element_from_list(self.real_estate_types, index)
+        offer, index = self._get_element_from_list(self.offer_types, index)
+        location, index = self._get_element_from_list(self.locations, index)
         return SearchQuery({
             'forum': forum,
             'location': location,
@@ -96,7 +96,7 @@ class SearchInstruction:
             'offer': offer,
         })
 
-    def _getElementFromList(self, input_list, index):
+    def _get_element_from_list(self, input_list, index):
         list_length = len(input_list)
         list_element = input_list[index % list_length]
         return list_element, index // list_length
