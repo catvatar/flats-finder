@@ -1,16 +1,23 @@
 class SearchQuery:
+    forum = ''
     property_type = ''
     offer = ''
     location = ''
 
     def __init__(self, query):
         self._throw_on_missing_arguments(query)
+        self.forum = query['forum']
         self.property_type = query['property_type']
         self.offer = query['offer']
         self.location = query['location']
 
     def _throw_on_missing_arguments(self, query):
-        mandatory_arguments = ['property_type', 'offer', 'location']
+        mandatory_arguments = [
+            'forum',
+            'property_type', 
+            'offer', 
+            'location',
+        ]
         self._check_arguments_in_query(mandatory_arguments, query)
         return
     
