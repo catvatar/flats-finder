@@ -44,7 +44,7 @@ class TestBrowser(unittest.TestCase):
             'offer' : 'rent',
         })
         self.assertNotEqual(query_A, query_B)
-        
+
     def todo_throws_on_unsupported_arguments(self):
         #TODO replace todo in todo_throws_on_unsupported_arguments with test
         with self.assertRaises(ValueError):
